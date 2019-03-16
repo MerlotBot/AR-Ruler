@@ -86,18 +86,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func calculate() {
-        let start = dotNodes[0]
-        let end = dotNodes[1]
+//        let start = dotNodes[0]
+//        let end = dotNodes[1]
+//
+//        print("Start position is \(start.position)")
+//        print("End position is \(end.position)")
+//
+//        let distance = sqrt(
+//            pow(end.position.x - start.position.x, 2) +
+//            pow(end.position.y - start.position.y, 2) +
+//            pow(end.position.z - start.position.z, 2)
+//        )
+        // alternative way
+        let a = dotNodes[0].simdPosition
+        let b = dotNodes[1].simdPosition
         
-        print("Start position is \(start.position)")
-        print("End position is \(end.position)")
-        
-        let distance = sqrt(
-            pow(end.position.x - start.position.x, 2) +
-            pow(end.position.y - start.position.y, 2) +
-            pow(end.position.z - start.position.z, 2)
-        )
+        let distance = simd_distance(a, b)
         print(distance)
-//        distance = √ ((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2)
     }
 }
