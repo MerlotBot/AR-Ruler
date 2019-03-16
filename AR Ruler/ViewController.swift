@@ -14,6 +14,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     
+    // create an array of all nodes that we will use to track all nodes that being put to the scene
+    var dotNodes = [SCNNode]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +59,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    // function to add a node into the 3D world to show where we tapped
     func addDot(at hitResult: ARHitTestResult) {
         let dotGeometry = SCNSphere(radius: 0.005)
         let material = SCNMaterial()
@@ -72,6 +76,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         )
         
         sceneView.scene.rootNode.addChildNode(dotNode)
+        // append the nodes array with additional nodes
+        dotNodes.append(dotNode)
+        
+        // Check if there are 2 or more nodes in the array
+        if dotNodes.count >= 2 {
+            calculate()
+        }
     }
     
+    func calculate() {
+        let start = dotNodes[0]
+        let end = dotNodes[1]
+        
+        print("Start position is \(start.position)")
+        print("End position is \(end.position)")
+        
+        let distance = sqrt(
+            pow(end.position.x - start.position.x, 2) +
+            pow(end.position.y - start.position.y, 2) +
+            pow(end.position.z - start.position.z, 2)
+        )
+        print(distance)
+//        distance = √ ((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2)
+    }
 }
